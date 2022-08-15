@@ -21,7 +21,7 @@ const port = process.env.PORT || 4000;
 
 //ruta de bienvenida
 app.get('/' , (req,res) => {   // Primera ruta creada 
-    return res.send('Benvenuti alla clinica veterinaria duemari')
+    return res.send('Benvenuti alla Clinica Veterinaria Duemari')
 });
 
 // Si no encuentra la ruta indicada retorna un error 404
