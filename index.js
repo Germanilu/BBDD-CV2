@@ -6,6 +6,11 @@ require('dotenv').config();
 const db = require('./config/database');  
 
 
+
+//Connect to Auth Routes
+const authRoutes = require('./routes/auth.routes');
+
+
 //conecto express a mi const app
 const app = express(); 
 
@@ -17,6 +22,10 @@ app.use(express.json())
 
 //Puerto que utiliza el sv
 const port = process.env.PORT || 4000; 
+
+
+//Routes
+app.use('/api', authRoutes);
 
 
 //ruta de bienvenida

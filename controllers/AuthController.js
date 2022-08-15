@@ -87,6 +87,7 @@ authController.login = async (req,res) => {
         const user = await User.findOne({email: email})  
        
         console.log(user.name)
+        
         if(!user){
             return res.status(400).json(
                 {
@@ -98,6 +99,8 @@ authController.login = async (req,res) => {
 
         //Reviso si el passw es valido
         const isValidPassword = bcrypt.compareSync(password, user.password);
+
+       
         
         if(!isValidPassword){
             return res.status(401).json(
