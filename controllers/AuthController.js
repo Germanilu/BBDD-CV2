@@ -85,8 +85,6 @@ authController.login = async (req,res) => {
 
         // Busco si el usuario existe
         const user = await User.findOne({email: email})  
-       
-        console.log(user.name)
         
         if(!user){
             return res.status(400).json(
@@ -99,8 +97,6 @@ authController.login = async (req,res) => {
 
         //Reviso si el passw es valido
         const isValidPassword = bcrypt.compareSync(password, user.password);
-
-       
         
         if(!isValidPassword){
             return res.status(401).json(
@@ -110,8 +106,6 @@ authController.login = async (req,res) => {
                 }
             );
         }
-
-        
 
        //aqui creo mi jsonwebtoken
         const token = await jwt.sign({
@@ -126,7 +120,6 @@ authController.login = async (req,res) => {
             user_email: user.email
         }, process.env.JWT_SECRET, { expiresIn: '5h' });
 
-        console.log(token)
         return res.status(200).json(
             {
                 success: true,
@@ -151,7 +144,7 @@ authController.profile = async (req,res) => {
     try {
         
         const userId = req.user_id
-        console.log(userId)
+        
         //Esto me sirve para que enseñe el perfil del token que esta haciendo la busqueda y que me esconda la password (.select(["-password"]))
         // Si no pongon _id me devolvera siempre el perfil del superadmin 
         const user = await User.findOne({_id: userId}).select(["-password", "-__v"])
