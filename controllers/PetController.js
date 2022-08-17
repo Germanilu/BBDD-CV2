@@ -63,5 +63,47 @@ petController.deleteById = async(req,res) => {
     }
 }
 
+petController.update = async(req,res) => {
+    try {
+        const {id} = req.params;
+
+
+        //Check if missing data
+        if(req.body.name === "" || req.body.type === "" || req.body.breed === "" || req.body.age === "" || req.body.weight === ""){
+            return res.status(400).json({
+                success: false,
+                message: "Unable to update pet, missing data"
+            })
+        }
+
+        const {name, type, breed, age, weight, diseases} = req.body;
+
+        const updatePet = {
+            name,
+            type,
+            breed,
+            age,
+            weight,
+            diseases
+        }
+
+        await Pet.findOneAndUpdate({_id:id}, updatePet)
+        return res.status(200).json(
+            {
+                success: true,
+                message: "Pet Update Succesfully",
+            }
+        )
+    } catch (error) {
+        return res.status(500).json(
+            {
+                success: false,
+                message: "Unable to Update Data",
+                error: error?.message || error
+            }
+        )
+    }
+}
+
 
 module.exports = petController

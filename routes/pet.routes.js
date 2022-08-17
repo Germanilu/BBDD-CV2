@@ -10,6 +10,7 @@ const verifyToken = require('../middlewares/verifyToken');
 
 router.post('/pet/register', verifyToken, petController.register)
 router.delete('/pet:id', verifyToken, petController.deleteById)
+router.put('/pet:id', verifyToken,petController.update)
 
 
 module.exports = router;
