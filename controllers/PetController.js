@@ -41,4 +41,27 @@ petController.register = async (req,res) => {
 }
 
 
+petController.deleteById = async(req,res) => {
+    try {
+        const {id} = req.params;
+
+        await Pet.findByIdAndDelete(id)
+        
+        return res.status(200).json({
+            success: true,
+            message: "Pet deleted succesfully"
+        })
+
+    } catch (error) {
+        return res.status(500).json(
+            {
+                success: false,
+                message: "Unable to delete pet, pet not found",
+                error: error?.message || error
+            }
+        )
+    }
+}
+
+
 module.exports = petController
