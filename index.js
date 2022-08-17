@@ -10,6 +10,7 @@ const db = require('./config/database');
 //Connect to Auth Routes
 const authRoutes = require('./routes/auth.routes');
 const userRoutes = require('./routes/user.routes');
+const petRoutes = require('./routes/pet.routes');
 
 
 //conecto express a mi const app
@@ -27,7 +28,8 @@ const port = process.env.PORT || 4000;
 
 //Routes
 app.use('/api', authRoutes);
-app.use('/api', userRoutes)  
+app.use('/api', userRoutes);
+app.use('/api', petRoutes);
 
 
 //ruta de bienvenida
