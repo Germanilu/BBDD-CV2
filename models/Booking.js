@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
-const moment = require('moment');
-let now = moment()
+
 
 const bookingSchema = new mongoose.Schema({
     userId: {
@@ -14,7 +13,7 @@ const bookingSchema = new mongoose.Schema({
     },
 
     hour: {
-        type: Number,
+        type: String,
         required: true
     }
 
