@@ -1,6 +1,7 @@
 const Pet = require('../models/Pet');
 const petController = {};
 
+//Register
 petController.register = async (req,res) => {
     try {
         const {name,type, breed, age, weight, diseases} = req.body;
@@ -40,7 +41,7 @@ petController.register = async (req,res) => {
     }
 }
 
-
+//Delete
 petController.deleteById = async(req,res) => {
     try {
         const {id} = req.params;
@@ -63,6 +64,7 @@ petController.deleteById = async(req,res) => {
     }
 }
 
+//Update
 petController.update = async(req,res) => {
     try {
         const {id} = req.params;
