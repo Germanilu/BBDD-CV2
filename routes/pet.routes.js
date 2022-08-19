@@ -11,6 +11,8 @@ const verifyToken = require('../middlewares/verifyToken');
 router.post('/pet/register', verifyToken, petController.register)
 router.delete('/pet:id', verifyToken, petController.deleteById)
 router.put('/pet:id', verifyToken,petController.update)
+router.get('/pets',verifyToken,isSuperAdmin,petController.getAll)
+router.get('/pets:id', verifyToken, isSuperAdmin, petController.getPetById)
 
 
 module.exports = router;

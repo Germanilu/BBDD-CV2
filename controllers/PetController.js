@@ -107,5 +107,55 @@ petController.update = async(req,res) => {
     }
 }
 
+petController.getAll = async(req,res) => {
+    try {
+        const pets = await Pet.find()
+
+        return res.status(200).json(
+            {
+                success: true,
+                message: "Pet Update Succesfully",
+                data: pets
+            }
+        )
+
+    } catch (error) {
+         return res.status(500).json(
+            {
+                success: false,
+                message: "No pets registered in the DB",
+                error: error?.message || error
+            }
+        )
+    }
+}
+
+
+petController.getPetById = async(req,res) => {
+    try {
+
+        const {id} = req.params;
+
+        const pet = await Pet.findById(id)
+
+        return res.status(200).json(
+            {
+                success: true,
+                message: "Pet retrived succesfully",
+                data: pet
+            }
+        )
+
+    } catch (error) {
+         return res.status(500).json(
+            {
+                success: false,
+                message: "Doesn't exist any pet with this id",
+                error: error?.message || error
+            }
+        )
+    }
+}
+
 
 module.exports = petController
