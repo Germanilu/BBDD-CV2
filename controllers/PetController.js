@@ -157,5 +157,37 @@ petController.getPetById = async(req,res) => {
     }
 }
 
+petController.getByUserId = async(req,res) => {
+    try {
+        const {userId} = req.params;
+
+        const pets = await Pet.find({userId: userId});
+
+        if(pets.length === 0){
+            return res.status(500).json(
+                {
+                    success: false,
+                    message: 'User do not have any pet registered yet',
+                }
+            )
+        }
+        return res.status(200).json(
+            {
+                success: true,
+                message: 'All pets retrived succsesfully',
+                data: pets
+            }
+        )
+    } catch (error) {
+        return res.status(500).json(
+            {
+                success: false,
+                message: 'Error retriving pets',
+                error: error.message
+            }
+        )
+    }
+}
+
 
 module.exports = petController
