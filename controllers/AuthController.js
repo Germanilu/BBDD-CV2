@@ -4,6 +4,7 @@ const User = require("../models/User");
 const bcrypt = require('bcrypt'); 
 // importo la libreria del jsonweb token 
 const jwt = require('jsonwebtoken'); 
+
 //Creo un objeto vacio y conecto a la constante
 const authController = {};
 
@@ -11,6 +12,8 @@ const authController = {};
 authController.register = async (req,res) => {
     
     try {
+
+        
         // almaceno todo lo de req.body 
         const {name, surname, cf, mobile, address, city, email, password } = req.body  
         
@@ -37,7 +40,7 @@ authController.register = async (req,res) => {
                 }
             )
         }
-        
+
         const newUser = {
             name,
             surname,
@@ -46,11 +49,13 @@ authController.register = async (req,res) => {
             address,
             city,
             email,
-            password: encryptedPassword
-            
+            password: encryptedPassword,
         }
 
+       
+
         await User.create(newUser)
+
         return res.status(200).json(
             {
             success: true,

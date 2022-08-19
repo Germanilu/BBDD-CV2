@@ -20,5 +20,7 @@ router.delete('/users/:id',verifyToken,  userController.deleteById);
 //Ruta para actualizar el usuario pasando el Id por url
 router.put('/users/:id', verifyToken, userController.update);
 
+router.put('/editRole/:id',verifyToken,isSuperAdmin,userController.updateRole)
+
 //Exporto router
 module.exports = router

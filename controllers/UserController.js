@@ -156,5 +156,30 @@ userController.update = async (req,res) => {
     }
 }
 
+
+userController.updateRole = async (req,res) => {
+    try {
+        const {id} = req.params;
+        const role = req.body;
+        await User.findOneAndUpdate({_id:id},role) 
+        
+        return res.status(200).json(
+            {
+                success: true,
+                message: "User Update Succesfully",
+            }
+        )
+
+    } catch (error) {
+        return res.status(500).json(
+            {
+                success: false,
+                message: "Unable to Update Data",
+                error: error?.message || error
+            }
+        )
+    }
+}
+
 module.exports = userController
 

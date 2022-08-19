@@ -87,7 +87,7 @@ bookingController.getAllByUserId = async(req,res) => {
     }
 }
 
-
+//Get All booking (ADMIN)
 bookingController.getAll = async(req,res) => {
     try {
         const booking = await Booking.find()

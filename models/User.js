@@ -37,12 +37,11 @@ const UserSchema = new mongoose.Schema({
         minLength: 6, 
     },
     
-     
     role: {
         type: String,
-        enum: ['user', 'admin', 'super_admin'],  
-        default: 'user' 
-    },
+        enum: ['user','vet','super_admin'],
+        default: 'user'
+    }
     
 },
     //Para que se ponga por defecto createdAt y updatedAt con la fecha actual
