@@ -53,12 +53,12 @@ bookingController.create = async(req,res) => {
 
 bookingController.getAllByUserId = async(req,res) => {
     try {
-        //Request UserId by params and find if exist in Booking
-        const  {userId}  = req.params;  
+        //Retrive user id by tokem
+        const userId  = req.user_id;  
         const booking = await Booking.find({userId});
 
         //If not reject
-        if(!userId || booking.length === 0 || !booking){      
+        if(booking.length === 0 ){      
             return res.status(404).json(
                 
                 {
@@ -75,7 +75,7 @@ bookingController.getAllByUserId = async(req,res) => {
                 data: booking
             }
         )
-        
+
     } catch (error) {
         return res.status(500).json(
             {
@@ -86,6 +86,9 @@ bookingController.getAllByUserId = async(req,res) => {
         )
     }
 }
+
+
+
 
 //Delete appointment
 

@@ -5,7 +5,8 @@ const router = require('express').Router();
 
 //Book appointment
 router.post('/booking', verifyToken, bookingController.create)
-router.get('/booking/:userId', verifyToken, bookingController.getAllByUserId)
+router.get('/myBooking', verifyToken, bookingController.getAllByUserId)
+// router.get('booking', verifyToken, isSuperAdmin, bookingController.getAll)
 router.delete('/booking/:id', verifyToken, bookingController.delete)
 
 
