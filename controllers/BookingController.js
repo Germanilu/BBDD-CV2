@@ -49,4 +49,70 @@ bookingController.create = async(req,res) => {
     }
 }
 
+//Get all my bookings
+
+bookingController.getAllByUserId = async(req,res) => {
+    try {
+        //Request UserId by params and find if exist in Booking
+        const  {userId}  = req.params;  
+        const booking = await Booking.find({userId});
+
+        //If not reject
+        if(!userId || booking.length === 0 || !booking){      
+            return res.status(404).json(
+                
+                {
+                    success: false,
+                    message: "You don't have any pending booking yet"             
+                }
+            )
+        }
+
+        return res.status(200).json(
+            {
+                success: true,
+                message: 'All bookings retrieved succsessfully',
+                data: booking
+            }
+        )
+        
+    } catch (error) {
+        return res.status(500).json(
+            {
+                success: false,
+                message: 'Error retriving Bookings',
+                error: error.message
+            }
+        )
+    }
+}
+
+//Delete appointment
+
+bookingController.delete = async(req,res) => {
+    try {
+        const id = req.params
+
+        const bookingDelete = await Booking.findOneAndDelete(id);
+
+        if(bookingDelete == null){
+            return res.status(500).json({
+                success: false,
+                message: "Unable to delete booking "
+            })
+        }
+
+        return res.status(200).json({
+            success: true,
+            message: "Your Booking has been deleted",
+            })
+    } catch (error) {
+        return res.status(500).json({
+            success: false,
+            message: "Error detected",
+            data: error?.message || error
+        })
+    }
+}
+
 module.exports = bookingController;
