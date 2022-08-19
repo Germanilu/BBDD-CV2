@@ -88,7 +88,35 @@ bookingController.getAllByUserId = async(req,res) => {
 }
 
 
+bookingController.getAll = async(req,res) => {
+    try {
+        const booking = await Booking.find()
 
+        if(!booking){
+            return res.status(200).json(
+                {
+                    success: true,
+                    message: 'No pending bookings ',
+                }
+            )
+        }
+        return res.status(200).json(
+            {
+                success: true,
+                message: 'All orders retrieved succsessfully',
+                data: booking
+            }
+        )
+    } catch (error) {
+        return res.status(500).json(
+            {
+                success: false,
+                message: 'Error retriving all orders',
+                error: error.message
+            }
+        )
+    }
+}
 
 //Delete appointment
 
