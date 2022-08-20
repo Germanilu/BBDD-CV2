@@ -82,21 +82,36 @@ consultController.getByUserId = async(req,res) => {
 
 consultController.delete = async(req,res) => {
     try {
-        const id = req.params;
+        const {id} = req.params;
 
-        const consultDelete = await Consult.findOneAndDelete(id);
-        
-        if(consultDelete == null){
+        //find consult by id and check if vet already reply
+        const consulta = await Consult.findById(id)
+        console.log(consulta)
+
+        if(consulta == null){
             return res.status(500).json({
                 success: false,
                 message: "Unable to delete consult "
             })
         }
 
+        //if vet reply user not able to delete it
+        if(consulta.vetId){
+            return res.status(500).json({
+                success: false,
+                message: "Unable to delete consult "
+            })
+        }
+
+        //if no user reply ---> delete
+        await Consult.findByIdAndDelete(id);
+        
+    
         return res.status(200).json({
             success: true,
             message: "Your Consult has been deleted",
             })
+         
 
     } catch (error) {
         return res.status(500).json({
@@ -114,7 +129,7 @@ consultController.reply = async(req,res) => {
         const vetId = req.vet_id;
         const {date,userMessage,vetMessage} = req.body
 
-        
+
         const consultReply = {
             date,
             userMessage,
