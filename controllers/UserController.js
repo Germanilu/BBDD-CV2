@@ -181,5 +181,5 @@ userController.updateRole = async (req,res) => {
     }
 }
 
-module.exports = userController
+module.exports = userController;
 

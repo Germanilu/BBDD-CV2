@@ -4,6 +4,7 @@ const User = require("../models/User");
 const bcrypt = require('bcrypt'); 
 // importo la libreria del jsonweb token 
 const jwt = require('jsonwebtoken'); 
+const Vet = require("../models/Vet");
 
 //Creo un objeto vacio y conecto a la constante
 const authController = {};
@@ -90,8 +91,10 @@ authController.login = async (req,res) => {
 
         // Busco si el usuario existe
         const user = await User.findOne({email: email})  
-        
-        if(!user){
+        const vet = await Vet.findOne({email:email})
+
+
+        if(!user && !vet){
             return res.status(400).json(
                 {
                     success: false,
@@ -100,7 +103,38 @@ authController.login = async (req,res) => {
             );
         };
 
-        //Reviso si el passw es valido
+        //If vet login
+        if(vet){
+            const isValidPassword = bcrypt.compareSync(password, vet.password);
+
+            if(!isValidPassword){
+                return res.status(401).json(
+                    {
+                        success: false,
+                        message: 'Bad credential'
+                    }
+                );
+            }
+
+            const token = await jwt.sign({
+                vet_id : vet._id,
+                vet_role: vet.role,
+                vet_name: vet.name,
+                vet_surname: vet.surname,
+                vet_email: vet.email
+            }, process.env.JWT_SECRET, { expiresIn: '5h' })
+
+
+            return res.status(200).json(
+                {
+                    success: true,
+                    message: 'User Logged',
+                    token: token 
+                }
+            );
+            
+        }else{
+            //Reviso si el passw es valido
         const isValidPassword = bcrypt.compareSync(password, user.password);
         
         if(!isValidPassword){
@@ -111,6 +145,7 @@ authController.login = async (req,res) => {
                 }
             );
         }
+
 
        //aqui creo mi jsonwebtoken
         const token = await jwt.sign({
@@ -132,6 +167,9 @@ authController.login = async (req,res) => {
                 token: token 
             }
         );
+        }
+
+        
 
     } catch (error) {
         return res.status(400).json(

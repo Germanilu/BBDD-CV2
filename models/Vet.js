@@ -5,8 +5,26 @@ const VetSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    surname: {
+        type: String,
+        required: true
+    },
     specialization: {
         type: String
+    },
+    email: {
+        type: String,
+        required: true, 
+        unique: true, 
+    },
+    password: {
+        type: String,
+        required: true,
+        minLength: 6, 
+    },
+    role: {
+        type: String,
+        default: 'vet'
     }
 })
 
