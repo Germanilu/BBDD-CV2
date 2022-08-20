@@ -1,7 +1,6 @@
 const Vet = require('../models/Vet');
 const bcrypt = require('bcrypt'); 
-// importo la libreria del jsonweb token 
-const jwt = require('jsonwebtoken'); 
+
 const vetController = {};
 
 vetController.create = async (req,res) => {
@@ -60,22 +59,95 @@ vetController.create = async (req,res) => {
     }
 }
 
-
-vetController.login = async(req,res) => {
+vetController.getAll = async(req,res) => {
     try {
-        const {email,password} = req.body
-        if(!email || !password){
-            return res.status(400).json(
+        const vet = await Vet.find();
+
+        return res.status(200).json(  
+            {
+                success: true,  
+                message: 'All Vets retrieved succsessfully',
+                data: vet 
+            }
+        );
+    } catch (error) {
+        return res.status(500).json(  
+            {
+                success: false,  
+                message: 'Error retriving Vets',
+                error: error.message
+            }
+        )
+    }
+}
+
+vetController.getVetById = async(req,res) => {
+    try {
+        const {id} = req.params;
+
+        const vet = await Vet.findById(id);
+
+        if(!vet){
+            return res.status(404).json
+            (
                 {
-                    success: false,
-                    message: 'Email and password are required'
+                    success:true,
+                    message: "Vet Not Found",
+                    data:[]
+                }
+            )
+        }
+
+        return res.status(200).json(
+            {
+                success: true,
+                message: "Vet found",
+                data: vet 
+            }
+        )
+    } catch (error) {
+        if(error?.message.includes('Cast to ObjectId failed')){
+            return res.status(404).json(
+                {
+                    success: true,
+                    messagge: "Error Vet NOT Found"
+
                 }
             );
         }
-    } catch (error) {
-        
+        return res.status(500).json(
+            {
+                success: false,
+                messagge: "Error finding Vet",
+                error: error?.message || error
+            }
+        )
     }
 }
+
+vetController.deleteById = async(req,res) => {
+    try {
+        const {id} = req.params;
+
+
+        await Vet.findByIdAndDelete(id)
+        return res.status(200).json(
+            {
+                success: true,
+                message: "Vet deleted",
+            }
+        )
+    } catch (error) {
+        return res.status(500).json(
+            {
+                success: false,
+                message: "Error, unable to delete Vet",
+                error: error?.message || error
+            }
+        )
+    }
+}
+
 
 
 module.exports = vetController;

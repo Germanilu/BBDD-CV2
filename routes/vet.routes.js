@@ -8,7 +8,9 @@ const isSuperAdmin = require('../middlewares/isSuperAdmin');
 const verifyToken = require('../middlewares/verifyToken');
 
 router.post('/newVet',verifyToken,isSuperAdmin,vetController.create);
-router.post('/vet/login',vetController.login)
+router.get('/vet',verifyToken, isSuperAdmin, vetController.getAll);
+router.get('/vet/:id',verifyToken, isSuperAdmin, vetController.getVetById);
+router.delete('/vet/:id', verifyToken,isSuperAdmin,vetController.deleteById);
 
 
 module.exports = router;
