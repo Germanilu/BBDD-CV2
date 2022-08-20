@@ -2,7 +2,7 @@ const Consult = require('../models/Consult');
 
 const consultController = {};
 
-
+//Create new consult
 consultController.create = async(req,res) => {
     try {
         const {date,userMessage} = req.body;
@@ -79,7 +79,7 @@ consultController.getByUserId = async(req,res) => {
    }
 }
 
-
+//Delete consult
 consultController.delete = async(req,res) => {
     try {
         const {id} = req.params;
@@ -122,26 +122,23 @@ consultController.delete = async(req,res) => {
     }
 }
 
+
+//Vet reply to consult
 consultController.reply = async(req,res) => {
     try {
         //Get data of consult id, vet id and body
-        const consultId = req.params;
+        const {id} = req.params;
         const vetId = req.vet_id;
-        const {date,userMessage,vetMessage} = req.body
+        const {vetMessage} = req.body
 
+        //Get the consult 
+       const consult = await Consult.findById(id)
+        //Set the consult data
+       consult.vetId = vetId
+       consult.vetMessage = vetMessage
+        //Save the consult
+       await consult.save()
 
-        const consultReply = {
-            date,
-            userMessage,
-            vetId,
-            vetMessage
-        }
-
-        
-
-        //Find consult and edit with vet message
-        await Consult.findOneAndUpdate({id:consultId},consultReply)
-        
         return res.status(200).json(
             {
                 success: true,
@@ -153,6 +150,32 @@ consultController.reply = async(req,res) => {
             {
                 success: false,
                 message: "Unable to reply",
+                error: error?.message || error
+            }
+        )
+    }
+}
+
+//Get the consult reply by vet Id
+consultController.getAllByVetId = async(req,res) => {
+    try {
+        const vetId = req.vet_id;
+        const consult = await Consult.find({vetId:vetId})
+        console.log(consult)
+        return res.status(200).json(
+            {
+                success: true,
+                message: "Retrive all consult by vet ID",
+                data:consult
+            }
+        )
+
+
+    } catch (error) {
+        return res.status(500).json(
+            {
+                success: false,
+                message: "Error retriving all consult",
                 error: error?.message || error
             }
         )
