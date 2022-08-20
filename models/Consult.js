@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const moment = require('moment');
+
 
 const consultSchema = new mongoose.Schema({
     userId:{
@@ -15,9 +15,12 @@ const consultSchema = new mongoose.Schema({
         type:Date,
         required:true
     },
-    message:{
+    userMessage:{
         type:String,
         required:true
+    },
+    vetMessage:{
+        type:String
     }
 })
 

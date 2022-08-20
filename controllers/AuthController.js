@@ -103,10 +103,10 @@ authController.login = async (req,res) => {
             );
         };
 
-        //If vet login
-        if(vet){
+        //If vet, login
+        if(!user){
             const isValidPassword = bcrypt.compareSync(password, vet.password);
-
+            
             if(!isValidPassword){
                 return res.status(401).json(
                     {
@@ -116,6 +116,7 @@ authController.login = async (req,res) => {
                 );
             }
 
+
             const token = await jwt.sign({
                 vet_id : vet._id,
                 vet_role: vet.role,
@@ -124,11 +125,13 @@ authController.login = async (req,res) => {
                 vet_email: vet.email
             }, process.env.JWT_SECRET, { expiresIn: '5h' })
 
+            
+
 
             return res.status(200).json(
                 {
                     success: true,
-                    message: 'User Logged',
+                    message: 'Vet Logged',
                     token: token 
                 }
             );

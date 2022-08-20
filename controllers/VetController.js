@@ -149,5 +149,4 @@ vetController.deleteById = async(req,res) => {
 }
 
 
-
 module.exports = vetController;

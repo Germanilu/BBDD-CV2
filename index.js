@@ -13,6 +13,7 @@ const userRoutes = require('./routes/user.routes');
 const petRoutes = require('./routes/pet.routes');
 const bookingRoutes = require('./routes/booking.routes');
 const vetRoutes = require('./routes/vet.routes');
+const consultRoutes = require('./routes/consult.routes');
 
 
 //conecto express a mi const app
@@ -34,6 +35,7 @@ app.use('/api', userRoutes);
 app.use('/api', petRoutes);
 app.use('/api', bookingRoutes);
 app.use('/api',vetRoutes);
+app.use('/api',consultRoutes);
 
 
 //ruta de bienvenida
