@@ -24,6 +24,7 @@ const VetSchema = new mongoose.Schema({
     },
     role: {
         type: String,
+        enum: ['user','vet','super_admin'],
         default: 'vet'
     }
 })

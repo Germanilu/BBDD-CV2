@@ -35,11 +35,11 @@ const verifyVetToken = (req, res, next) => {
         }
 
         //Esto no entiendo pq me sirve, recupero id y role dentro del token?
-        req.vet_id = decoded.vet_id;
-        req.vet_role = decoded.vet_role;
-        req.vet_name = decoded.vet_name
-        req.vet_surname = decoded.vet_surname
-        req.vet_email = decoded.vet_email
+        req.user_id = decoded.user_id;
+        req.user_role = decoded.user_role;
+        req.user_name = decoded.user_name
+        req.user_surname = decoded.user_surname
+        req.user_email = decoded.user_email
 
 
         // Si todo va bien, continuarà 

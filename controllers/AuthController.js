@@ -118,11 +118,11 @@ authController.login = async (req,res) => {
 
 
             const token = await jwt.sign({
-                vet_id : vet._id,
-                vet_role: vet.role,
-                vet_name: vet.name,
-                vet_surname: vet.surname,
-                vet_email: vet.email
+                user_id : vet._id,
+                user_role: vet.role,
+                user_name: vet.name,
+                user_surname: vet.surname,
+                user_email: vet.email
             }, process.env.JWT_SECRET, { expiresIn: '5h' })
 
             

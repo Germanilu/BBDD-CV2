@@ -7,12 +7,13 @@ const jwt = require('jsonwebtoken');
 const isVet = (req,res,next) => {
 
     try {
-        //Si el usuario no tiene rol de super_admin no puede acceder
-        if(req.vet_role !== "vet"){
+        //Si el usuario no tiene rol de super_admin no puede acceder.
+        if(req.user_role === "user" ){
+            
             return res.status(200).json(
                 {
                     success: false,
-                    message: "AQUI don't have vet permission "
+                    message: "don't have vet permission "
                 }
             );
         }
