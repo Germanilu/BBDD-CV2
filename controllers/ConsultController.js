@@ -207,4 +207,26 @@ consultController.getAllConsultUnreply = async(req,res) => {
     }
 }
 
+//Get all consult (ADMIN)
+consultController.getAll = async(req,res) => {
+    try {
+        const consult = await Consult.find()
+        return res.status(200).json(
+            {
+                success: true,
+                message: "Retrive all consult ",
+                data:consult
+            }
+        )
+    } catch (error) {
+        return res.status(500).json(
+            {
+                success: false,
+                message: "Error retriving all consult ",
+                error: error?.message || error
+            }
+        )
+    }
+}
+
 module.exports = consultController
