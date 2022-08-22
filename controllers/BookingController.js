@@ -3,12 +3,12 @@ const Booking = require('../models/Booking');
 const bookingController = {};
 
 //Book appointment
-bookingController.create = async(req,res) => {
+bookingController.create = async (req, res) => {
     try {
         //Get the data from token & body
         const userId = req.user_id;
-        const {date, hour} = req.body;
-    
+        const { date, hour } = req.body;
+
         const newBook = {
             userId,
             date,
@@ -16,19 +16,19 @@ bookingController.create = async(req,res) => {
         }
 
         //Check if i already have more than 2 bookings for the same date & hour, if so, i reject the appointment
-        const bookingDate = await Booking.find({date : date})
-        if(bookingDate.length >= 2){
-            const bookingHour = await Booking.find({hour:hour})
-            if(bookingHour.length >= 2){
+        const bookingDate = await Booking.find({ date: date })
+        if (bookingDate.length >= 2) {
+            const bookingHour = await Booking.find({ hour: hour })
+            if (bookingHour.length >= 2) {
                 return res.status(404).json(
                     {
                         success: true,
-                        messagge: "Unable to book an appointment, already 2 or more bookings for this range of time"
+                        messagge: "Unable to book an appointment"
                     }
                 );
             }
         }
-        
+
         //Create new booking
         await Booking.create(newBook);
         return res.status(200).json(
@@ -43,27 +43,25 @@ bookingController.create = async(req,res) => {
         return res.status(404).json(
             {
                 success: true,
-                messagge: "Unable to book"
+                messagge: "Error while trying to book an appointment"
             }
         );
     }
 }
 
 //Get all my bookings
-
-bookingController.getAllByUserId = async(req,res) => {
+bookingController.getAllByUserId = async (req, res) => {
     try {
         //Retrive user id by tokem
-        const userId  = req.user_id;  
-        const booking = await Booking.find({userId});
+        const userId = req.user_id;
+        const booking = await Booking.find({ userId });
 
         //If not reject
-        if(booking.length === 0 ){      
+        if (booking.length === 0) {
             return res.status(404).json(
-                
                 {
                     success: false,
-                    message: "You don't have any pending booking yet"             
+                    message: "You don't have any pending booking yet"
                 }
             )
         }
@@ -88,11 +86,11 @@ bookingController.getAllByUserId = async(req,res) => {
 }
 
 //Get All booking (ADMIN)
-bookingController.getAll = async(req,res) => {
+bookingController.getAll = async (req, res) => {
     try {
         const booking = await Booking.find()
-
-        if(!booking){
+        //Validation
+        if (!booking) {
             return res.status(200).json(
                 {
                     success: true,
@@ -119,14 +117,12 @@ bookingController.getAll = async(req,res) => {
 }
 
 //Delete appointment
-
-bookingController.delete = async(req,res) => {
+bookingController.delete = async (req, res) => {
     try {
         const id = req.params
-
         const bookingDelete = await Booking.findOneAndDelete(id);
-
-        if(bookingDelete == null){
+        //validation
+        if (bookingDelete == null) {
             return res.status(500).json({
                 success: false,
                 message: "Unable to delete booking "
@@ -136,7 +132,7 @@ bookingController.delete = async(req,res) => {
         return res.status(200).json({
             success: true,
             message: "Your Booking has been deleted",
-            })
+        })
     } catch (error) {
         return res.status(500).json({
             success: false,

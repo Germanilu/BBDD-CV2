@@ -1,23 +1,23 @@
 const User = require("../models/User");
-const bcrypt = require('bcrypt'); 
+const bcrypt = require('bcrypt');
 const userController = {};
 
-//Metodo getAll
-userController.getAll = async (req,res) => {
+//Get all users
+userController.getAll = async (req, res) => {
     try {
         const users = await User.find();
 
-        return res.status(200).json(  
+        return res.status(200).json(
             {
-                success: true,  
+                success: true,
                 message: 'All users retrieved succsessfully',
-                data: users 
+                data: users
             }
         );
     } catch (error) {
-        return res.status(500).json(  
+        return res.status(500).json(
             {
-                success: false,  
+                success: false,
                 message: 'Error retriving users',
                 error: error.message
             }
@@ -25,34 +25,33 @@ userController.getAll = async (req,res) => {
     }
 };
 
-// Metodo get por ID
-userController.getUserById = async(req,res) => {
-   
+// Get by user id
+userController.getUserById = async (req, res) => {
+
     try {
-        const {id} = req.params; 
-
-        const user = await User.findById(id) 
-       
-        if(!user){
+        const { id } = req.params;
+        const user = await User.findById(id)
+        //Validation
+        if (!user) {
             return res.status(404).json
-            (
-                {
-                    success: true,
-                    message: "User NOT found",
-                    data: [] 
-                }
-            )
+                (
+                    {
+                        success: true,
+                        message: "User NOT found",
+                        data: []
+                    }
+                )
         }
 
-    return res.status(200).json(
-        {
-            success: true,
-            message: "User found",
-            data: user 
-        }
-    )
+        return res.status(200).json(
+            {
+                success: true,
+                message: "User found",
+                data: user
+            }
+        )
     } catch (error) {
-        if(error?.message.includes('Cast to ObjectId failed')){
+        if (error?.message.includes('Cast to ObjectId failed')) {
             return res.status(404).json(
                 {
                     success: true,
@@ -71,19 +70,19 @@ userController.getUserById = async(req,res) => {
     }
 };
 
-//Metodo DELETE BY ID
-userController.deleteById = async(req,res) => {
+//Delete user by id
+userController.deleteById = async (req, res) => {
 
     try {
-        const {id} = req.params;
-
-        if(id !== req.user_id ){
+        const { id } = req.params;
+        //Validation to avoid user able to delete other users
+        if (id !== req.user_id) {
             return res.status(200).json(
                 {
                     success: true,
                     message: "Unable to delet user, user not found",
                 }
-            )            
+            )
         }
 
         await User.findByIdAndDelete(id)
@@ -104,26 +103,25 @@ userController.deleteById = async(req,res) => {
     }
 }
 
-//METODO UPDATE
-userController.update = async (req,res) => {
+//Update user data
+userController.update = async (req, res) => {
     try {
-        const {id} = req.params;
-        if(req.body.name === ""){
+        const { id } = req.params;
+        if (req.body.name === "") {
             return res.status(400).json(
                 {
                     success: false,
-                    message: "Unable to update, missing data " 
+                    message: "Unable to update, missing data "
                 }
             )
         }
 
-        const {name,surname,cf,mobile,address,city,email,password} = req.body
+        const { name, surname, cf, mobile, address, city, email, password } = req.body
 
-        //Codificacion password       
+        //Codif. passw     
         const salt = await bcrypt.genSalt(10);
-        //Conecto a mi encryptedPassword el nuevo hash creado.
+        //Connect codif passw to new hash
         const encryptedPassword = await bcrypt.hash(password, salt);
-
 
         const updateUser = {
             name,
@@ -136,15 +134,14 @@ userController.update = async (req,res) => {
             password: encryptedPassword,
         }
 
-
-       await User.findOneAndUpdate({_id:id},updateUser) 
+        await User.findOneAndUpdate({ _id: id }, updateUser)
         return res.status(200).json(
             {
                 success: true,
                 message: "User Update Succesfully",
             }
         )
-        
+
     } catch (error) {
         return res.status(500).json(
             {
@@ -156,13 +153,13 @@ userController.update = async (req,res) => {
     }
 }
 
-
-userController.updateRole = async (req,res) => {
+//Update Role (ADMIN)
+userController.updateRole = async (req, res) => {
     try {
-        const {id} = req.params;
+        const { id } = req.params;
         const role = req.body;
-        await User.findOneAndUpdate({_id:id},role) 
-        
+        await User.findOneAndUpdate({ _id: id }, role)
+
         return res.status(200).json(
             {
                 success: true,

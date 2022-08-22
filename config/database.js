@@ -1,7 +1,8 @@
-const mongoose = require('mongoose');// importo libreria de mongoose para que  funcione mongoose
+//Import lib. mongoose
+const mongoose = require('mongoose');
 
 //connection to MONGODB
-const db = () => mongoose.connect(process.env.MONGO_URI) // aqui ejecuto la coneccion a mongoose, esto lo que me devuelve es una promesa y la uso con .then o .catch (/test es lo que voy a atacar en mi base de datos puedo cambiarla)
+const db = () => mongoose.connect(process.env.MONGO_URI) 
 .then(() => {
     console.log('Connection stablished')
 })
@@ -9,4 +10,5 @@ const db = () => mongoose.connect(process.env.MONGO_URI) // aqui ejecuto la cone
     console.log('Error connection to MongoDB',error)
 })
 
-module.exports = db // Exporto la constante db con dentro la ejecucion de mongoose.
+//Export db
+module.exports = db 

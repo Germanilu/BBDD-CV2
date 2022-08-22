@@ -1,7 +1,6 @@
 const mongoose = require('mongoose');
-
-
 const UserSchema = new mongoose.Schema({
+
     name: {
         type: String,
         required: true,
@@ -36,7 +35,6 @@ const UserSchema = new mongoose.Schema({
         required: true,
         minLength: 6, 
     },
-    
     role: {
         type: String,
         enum: ['user','super_admin'],
@@ -44,7 +42,7 @@ const UserSchema = new mongoose.Schema({
     }
     
 },
-    //Para que se ponga por defecto createdAt y updatedAt con la fecha actual
+    //To obtain data createdAt & updatedAt by default
     {
         timestamps: true   
     }
@@ -52,6 +50,5 @@ const UserSchema = new mongoose.Schema({
 );
 
 const User = mongoose.model('User',UserSchema);
-
 module.exports = User;
 

@@ -1,13 +1,13 @@
 const Vet = require('../models/Vet');
-const bcrypt = require('bcrypt'); 
-
+const bcrypt = require('bcrypt');
 const vetController = {};
 
-vetController.create = async (req,res) => {
+//Create new Vet
+vetController.create = async (req, res) => {
     try {
-        const {name,surname,specialization,email,password} = req.body;
-
-        if(!name || !email || !password){
+        const { name, surname, specialization, email, password } = req.body;
+        //Validation
+        if (!name || !email || !password) {
             return res.status(400).json(
                 {
                     success: false,
@@ -16,13 +16,13 @@ vetController.create = async (req,res) => {
             )
         }
 
-        //Codificacion password       
+        //Codif passwd     
         const salt = await bcrypt.genSalt(10);
 
-        //Conecto a mi encryptedPassword el nuevo hash creado.
+        //Connect codif passwd to new hash
         const encryptedPassword = await bcrypt.hash(password, salt);
 
-        if(password.length < 6 || password.length > 10){
+        if (password.length < 6 || password.length > 10) {
             return res.status(500).json(
                 {
                     success: false,
@@ -43,37 +43,38 @@ vetController.create = async (req,res) => {
 
         return res.status(200).json(
             {
-            success: true,
-            message: 'Create Vet successfully'
+                success: true,
+                message: 'Create Vet successfully'
             }
         )
 
     } catch (error) {
         return res.status(500).json(
             {
-            success: false,
-            message: 'Error creating user: ',
-            error: error?.message || RangeError
+                success: false,
+                message: 'Error creating user: ',
+                error: error?.message || RangeError
             }
         )
     }
 }
 
-vetController.getAll = async(req,res) => {
+//Get all Vet
+vetController.getAll = async (req, res) => {
     try {
         const vet = await Vet.find();
 
-        return res.status(200).json(  
+        return res.status(200).json(
             {
-                success: true,  
+                success: true,
                 message: 'All Vets retrieved succsessfully',
-                data: vet 
+                data: vet
             }
         );
     } catch (error) {
-        return res.status(500).json(  
+        return res.status(500).json(
             {
-                success: false,  
+                success: false,
                 message: 'Error retriving Vets',
                 error: error.message
             }
@@ -81,32 +82,32 @@ vetController.getAll = async(req,res) => {
     }
 }
 
-vetController.getVetById = async(req,res) => {
+//Get vet by ID
+vetController.getVetById = async (req, res) => {
     try {
-        const {id} = req.params;
-
+        const { id } = req.params;
         const vet = await Vet.findById(id);
 
-        if(!vet){
+        if (!vet) {
             return res.status(404).json
-            (
-                {
-                    success:true,
-                    message: "Vet Not Found",
-                    data:[]
-                }
-            )
+                (
+                    {
+                        success: true,
+                        message: "Vet Not Found",
+                        data: []
+                    }
+                )
         }
 
         return res.status(200).json(
             {
                 success: true,
                 message: "Vet found",
-                data: vet 
+                data: vet
             }
         )
     } catch (error) {
-        if(error?.message.includes('Cast to ObjectId failed')){
+        if (error?.message.includes('Cast to ObjectId failed')) {
             return res.status(404).json(
                 {
                     success: true,
@@ -125,12 +126,12 @@ vetController.getVetById = async(req,res) => {
     }
 }
 
-vetController.deleteById = async(req,res) => {
+//Delete Vet
+vetController.deleteById = async (req, res) => {
     try {
-        const {id} = req.params;
+        const { id } = req.params;
+        await Vet.findByIdAndDelete(id);
 
-
-        await Vet.findByIdAndDelete(id)
         return res.status(200).json(
             {
                 success: true,
@@ -147,6 +148,5 @@ vetController.deleteById = async(req,res) => {
         )
     }
 }
-
 
 module.exports = vetController;

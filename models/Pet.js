@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-
 const PetSchema = new mongoose.Schema({
 
     userId:{
@@ -35,5 +34,4 @@ const PetSchema = new mongoose.Schema({
 })
 
 const Pet = mongoose.model('Pet',PetSchema);
-
 module.exports = Pet;

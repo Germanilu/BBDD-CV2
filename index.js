@@ -1,10 +1,9 @@
-//Requiero express
+//Require Express
 const express = require('express'); 
-//Cargo las variables de entorno
+//Environment variability
 require('dotenv').config(); 
-//Requiero database.js para que funcione el db de mongoose
+//Require db 
 const db = require('./config/database');  
-
 
 
 //Connect to Auth Routes
@@ -15,19 +14,14 @@ const bookingRoutes = require('./routes/booking.routes');
 const vetRoutes = require('./routes/vet.routes');
 const consultRoutes = require('./routes/consult.routes');
 
-
-//conecto express a mi const app
+//conect express to app
 const app = express(); 
 
-
-//Analiza la request de entrada y pinta los datos en el body
+//Check the entry request & create body data
 app.use(express.json())  
 
-
-
-//Puerto que utiliza el sv
+//Port
 const port = process.env.PORT || 4000; 
-
 
 //Routes
 app.use('/api', authRoutes);
@@ -38,19 +32,17 @@ app.use('/api',vetRoutes);
 app.use('/api',consultRoutes);
 
 
-//ruta de bienvenida
-app.get('/' , (req,res) => {   // Primera ruta creada 
+//Welcome Rute
+app.get('/' , (req,res) => {   
     return res.send('Benvenuti alla Clinica Veterinaria Duemari')
 });
 
-// Si no encuentra la ruta indicada retorna un error 404
+//If no rute, reject with 404
 app.get('*', (req,res) => {
     return res.status(404).send('404 Route not found')
 })
 
-
-
-// Ejecuto db para que funcione database.js
+//Ejec. db to use database.js
 db().then(() => {
 
     app.listen(port, () => {   

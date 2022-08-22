@@ -1,14 +1,9 @@
-//Middleware un middleware es una funcion que lo que hace es se ejecutarse antes o despues de la logica de  nuestro controlador
-
-//Requiero jsonwebtoken (No lo estoy utilizando de momento)
-const jwt = require('jsonwebtoken'); 
-
-//Creo funcion para verificar si es superadmin
-const isSuperAdmin = (req,res,next) => {
+//Check if superAdmin
+const isSuperAdmin = (req, res, next) => {
 
     try {
-        //Si el usuario no tiene rol de super_admin no puede acceder
-        if(req.user_role !== "super_admin"){
+        //Validastion if no super_admin role reject
+        if (req.user_role !== "super_admin") {
             return res.status(200).json(
                 {
                     success: false,
@@ -16,7 +11,7 @@ const isSuperAdmin = (req,res,next) => {
                 }
             );
         }
-        //Si la condicion no se cumple, seguira adelante.
+        //if validation pass, continue.
         next()
 
     } catch (error) {
@@ -29,6 +24,5 @@ const isSuperAdmin = (req,res,next) => {
     }
 };
 
-
-//Exporto isSuperAdmin
+//Export isSuperAdmin
 module.exports = isSuperAdmin

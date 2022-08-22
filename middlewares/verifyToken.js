@@ -1,12 +1,13 @@
-//Importo jsonwebtoken
-const jwt = require('jsonwebtoken'); 
+//Import JwToken
+const jwt = require('jsonwebtoken');
 
-//Creo funcion verifyToken
+//Create verifyToken
 const verifyToken = (req, res, next) => {
     try {
-        const {authorization} = req.headers; // recupero el token x headers
-         //Compruebo si el toquen existe en el header.
-        if(!authorization) {
+        //Get token by headers
+        const { authorization } = req.headers;
+        //Validation if token exist 
+        if (!authorization) {
             return res.status(401).json(
                 {
                     success: false,
@@ -14,18 +15,15 @@ const verifyToken = (req, res, next) => {
                 }
             );
         }
-       
-        //Con metodo split separo la palabra "bearer" del token y recupero solo el string del token
-        const token = authorization.split(' ')[1];   
-        
-        // Esto comprueba que el token es valido con la firma correspondiente(el secreto)
+
+        //Split "Bearer from token"
+        const token = authorization.split(' ')[1];
+
+        //Validation if token is valid with correct Secret
         var decoded = jwt.verify(token, process.env.JWT_SECRET);
-        
-       
-        
 
-        // Si el decoded no es valido devuelvo un error
-        if(!decoded){
+        // Validation if decoded is valid.
+        if (!decoded) {
             return res.status(401).json(
                 {
                     success: false,
@@ -34,7 +32,7 @@ const verifyToken = (req, res, next) => {
             );
         }
 
-        //Esto no entiendo pq me sirve, recupero id y role dentro del token?
+        //Insert data into token
         req.user_id = decoded.user_id;
         req.user_role = decoded.user_role;
         req.user_name = decoded.user_name
@@ -45,11 +43,8 @@ const verifyToken = (req, res, next) => {
         req.user_city = decoded.user_city
         req.user_email = decoded.user_email
 
+        next();
 
-        // Si todo va bien, continuarà 
-        next();  
-
-        
     } catch (error) {
         return res.status(500).json(
             {
@@ -60,5 +55,5 @@ const verifyToken = (req, res, next) => {
     }
 }
 
-//Exporto verifyToken
+//Export verifyToken
 module.exports = verifyToken;

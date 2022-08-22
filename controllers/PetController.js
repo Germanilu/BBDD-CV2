@@ -1,14 +1,14 @@
 const Pet = require('../models/Pet');
 const petController = {};
 
-//Register
-petController.register = async (req,res) => {
+//Register pet
+petController.register = async (req, res) => {
     try {
-        const {name,type, breed, age, weight, diseases} = req.body;
+        const { name, type, breed, age, weight, diseases } = req.body;
         //Connect the userId to the pet
         const userId = req.user_id;
-
-        if(!name || !type || !breed || !age || !weight){
+        //Validation
+        if (!name || !type || !breed || !age || !weight) {
             return res.status(400).json({
                 success: false,
                 message: "Name, type, breed, age or weight information missing"
@@ -41,13 +41,12 @@ petController.register = async (req,res) => {
     }
 }
 
-//Delete
-petController.deleteById = async(req,res) => {
+//Delete Pet
+petController.deleteById = async (req, res) => {
     try {
-        const {id} = req.params;
-
+        const { id } = req.params;
         await Pet.findByIdAndDelete(id)
-        
+
         return res.status(200).json({
             success: true,
             message: "Pet deleted succesfully"
@@ -64,22 +63,20 @@ petController.deleteById = async(req,res) => {
     }
 }
 
-//Update
-petController.update = async(req,res) => {
+//Update Pet
+petController.update = async (req, res) => {
     try {
-        const {id} = req.params;
-
+        const { id } = req.params;
 
         //Check if missing data
-        if(req.body.name === "" || req.body.type === "" || req.body.breed === "" || req.body.age === "" || req.body.weight === ""){
+        if (req.body.name === "" || req.body.type === "" || req.body.breed === "" || req.body.age === "" || req.body.weight === "") {
             return res.status(400).json({
                 success: false,
                 message: "Unable to update pet, missing data"
             })
         }
 
-        const {name, type, breed, age, weight, diseases} = req.body;
-
+        const { name, type, breed, age, weight, diseases } = req.body;
         const updatePet = {
             name,
             type,
@@ -89,7 +86,7 @@ petController.update = async(req,res) => {
             diseases
         }
 
-        await Pet.findOneAndUpdate({_id:id}, updatePet)
+        await Pet.findOneAndUpdate({ _id: id }, updatePet)
         return res.status(200).json(
             {
                 success: true,
@@ -108,10 +105,10 @@ petController.update = async(req,res) => {
 }
 
 //Get pets own by user
-petController.getMyPets = async(req,res) => {
+petController.getMyPets = async (req, res) => {
     try {
         const userId = req.user_id
-        const pets = await Pet.find({userId:userId})
+        const pets = await Pet.find({ userId: userId })
         return res.status(200).json(
             {
                 success: true,
@@ -130,7 +127,8 @@ petController.getMyPets = async(req,res) => {
     }
 }
 
-petController.getAll = async(req,res) => {
+//Get all existing pets
+petController.getAll = async (req, res) => {
     try {
         const pets = await Pet.find()
 
@@ -143,7 +141,7 @@ petController.getAll = async(req,res) => {
         )
 
     } catch (error) {
-         return res.status(500).json(
+        return res.status(500).json(
             {
                 success: false,
                 message: "No pets registered in the DB",
@@ -153,12 +151,11 @@ petController.getAll = async(req,res) => {
     }
 }
 
-
-petController.getPetById = async(req,res) => {
+//Get pet by id
+petController.getPetById = async (req, res) => {
     try {
 
-        const {id} = req.params;
-
+        const { id } = req.params;
         const pet = await Pet.findById(id)
 
         return res.status(200).json(
@@ -170,7 +167,7 @@ petController.getPetById = async(req,res) => {
         )
 
     } catch (error) {
-         return res.status(500).json(
+        return res.status(500).json(
             {
                 success: false,
                 message: "Doesn't exist any pet with this id",
@@ -180,13 +177,14 @@ petController.getPetById = async(req,res) => {
     }
 }
 
-petController.getByUserId = async(req,res) => {
+//Get pets by user ID
+petController.getByUserId = async (req, res) => {
     try {
-        const {userId} = req.params;
+        const { userId } = req.params;
 
-        const pets = await Pet.find({userId: userId});
+        const pets = await Pet.find({ userId: userId });
 
-        if(pets.length === 0){
+        if (pets.length === 0) {
             return res.status(500).json(
                 {
                     success: false,
@@ -211,6 +209,5 @@ petController.getByUserId = async(req,res) => {
         )
     }
 }
-
 
 module.exports = petController
