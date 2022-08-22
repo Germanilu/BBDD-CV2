@@ -107,6 +107,29 @@ petController.update = async(req,res) => {
     }
 }
 
+//Get pets own by user
+petController.getMyPets = async(req,res) => {
+    try {
+        const userId = req.user_id
+        const pets = await Pet.find({userId:userId})
+        return res.status(200).json(
+            {
+                success: true,
+                message: "Here all your Pets",
+                data: pets
+            }
+        )
+    } catch (error) {
+        return res.status(500).json(
+            {
+                success: false,
+                message: "Unable to retrive your pets",
+                error: error?.message || error
+            }
+        )
+    }
+}
+
 petController.getAll = async(req,res) => {
     try {
         const pets = await Pet.find()
