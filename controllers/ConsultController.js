@@ -182,4 +182,29 @@ consultController.getAllByVetId = async(req,res) => {
     }
 }
 
+//Get all consult where there isn't vet ID ( Unreply Consults)
+consultController.getAllConsultUnreply = async(req,res) => {
+    try {
+        const vetId = null;
+        const consult = await Consult.find({vetId:vetId})
+
+        return res.status(200).json(
+            {
+                success: true,
+                message: "Retrive all consult unreply",
+                data:consult
+            }
+        )
+
+    } catch (error) {
+         return res.status(500).json(
+            {
+                success: false,
+                message: "Error retriving all consult unreply",
+                error: error?.message || error
+            }
+        )
+    }
+}
+
 module.exports = consultController

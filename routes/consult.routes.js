@@ -12,5 +12,6 @@ router.delete('/myConsult/:id',verifyToken, consultController.delete)
 
 router.put('/consult/:id', verifyVetToken,isVet,consultController.reply)
 router.get('/consult',verifyVetToken,isVet,consultController.getAllByVetId)
+router.get('/allConsults',verifyVetToken,isVet,consultController.getAllConsultUnreply)
 
 module.exports = router
