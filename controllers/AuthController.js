@@ -82,7 +82,7 @@ authController.login = async (req, res) => {
             return res.status(400).json(
                 {
                     success: false,
-                    message: 'Email and password are required'
+                    message: 'Inserire Email e Password'
                 }
             );
         }
@@ -109,7 +109,7 @@ authController.login = async (req, res) => {
                 return res.status(401).json(
                     {
                         success: false,
-                        message: 'Bad credential'
+                        message: 'Email o Password Errata'
                     }
                 );
             }
