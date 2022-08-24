@@ -96,7 +96,7 @@ authController.login = async (req, res) => {
             return res.status(400).json(
                 {
                     success: false,
-                    message: 'Bad Credentials'
+                    message: 'Credenziali Errate'
                 }
             );
         };
@@ -139,7 +139,7 @@ authController.login = async (req, res) => {
                 return res.status(401).json(
                     {
                         success: false,
-                        message: 'Bad credential'
+                        message: 'Email o Password Errata'
                     }
                 );
             }
