@@ -14,11 +14,21 @@ const bookingRoutes = require('./routes/booking.routes');
 const vetRoutes = require('./routes/vet.routes');
 const consultRoutes = require('./routes/consult.routes');
 
+//Required Cors
+const cors = require('cors');
+
 //conect express to app
 const app = express(); 
 
 //Check the entry request & create body data
 app.use(express.json())  
+
+
+
+//Cors
+let corsOptions = {    origin: "*",    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",     methods: "GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS",    preflightContinue: false,     allowedHeaders: "Origin,X-Requested-With,Content-Type,Accept,Authorization",    optionsSuccessStatus: 204};
+//Request to app to use cors
+app.use(cors(corsOptions));
 
 //Port
 const port = process.env.PORT || 4000; 
