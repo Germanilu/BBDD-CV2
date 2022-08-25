@@ -13,7 +13,7 @@ const authController = {};
 authController.register = async (req, res) => {
     try {
         // Get body input
-        const { name, surname, cf, mobile, address, city, email, password } = req.body
+        const { name, surname, mobile, address, city, email, password } = req.body
 
         //Check necessary inputs
         if (!name || !email || !password) {
@@ -39,8 +39,8 @@ authController.register = async (req, res) => {
                 }
             )
         }
-        //Validation if user already exist
-        const existUser = await User.find({cf:cf})
+        // Validation if user already exist
+        const existUser = await User.find({email:email})
         if(existUser.length > 0 ){
             return res.status(500).json(
                 {
@@ -54,7 +54,6 @@ authController.register = async (req, res) => {
         const newUser = {
             name,
             surname,
-            cf,
             mobile,
             address,
             city,
@@ -161,7 +160,6 @@ authController.login = async (req, res) => {
                 user_role: user.role,
                 user_name: user.name,
                 user_surname: user.surname,
-                user_cf: user.cf,
                 user_mobile: user.mobile,
                 user_address: user.address,
                 user_city: user.city,

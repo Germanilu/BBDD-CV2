@@ -9,10 +9,6 @@ const UserSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    cf:{
-        type: String,
-        required: true
-    },
     mobile:{
         type: Number,
         required: true
