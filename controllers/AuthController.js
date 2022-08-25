@@ -35,7 +35,17 @@ authController.register = async (req, res) => {
             return res.status(500).json(
                 {
                     success: false,
-                    message: 'Password is shorter than 6 character'
+                    message: 'La password deve comprendere tra 6 e 10 caratteri'
+                }
+            )
+        }
+        //Validation if user already exist
+        const existUser = await User.find({cf:cf})
+        if(existUser.length > 0 ){
+            return res.status(500).json(
+                {
+                    success: false,
+                    message: 'Usuario Già Registrato'
                 }
             )
         }
@@ -65,7 +75,7 @@ authController.register = async (req, res) => {
         return res.status(500).json(
             {
                 success: false,
-                message: 'Error creating user: ',
+                message: 'Impossibile registrare usuario ',
                 error: error?.message || RangeError
             }
         )
