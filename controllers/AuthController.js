@@ -20,7 +20,7 @@ authController.register = async (req, res) => {
             return res.status(400).json(
                 {
                     success: false,
-                    message: "Name, email, password are required"
+                    message: "Compila i dati richiesti"
                 }
             )
         }
