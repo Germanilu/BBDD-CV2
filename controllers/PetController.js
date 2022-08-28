@@ -11,7 +11,7 @@ petController.register = async (req, res) => {
         if (!name || !type || !breed || !age || !weight) {
             return res.status(400).json({
                 success: false,
-                message: "Name, type, breed, age or weight information missing"
+                message: "Compila tutti i campi richiesti "
             })
         }
 
