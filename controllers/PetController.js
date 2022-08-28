@@ -35,7 +35,7 @@ petController.register = async (req, res) => {
     } catch (error) {
         return res.status(500).json({
             success: false,
-            message: 'Error creating pet',
+            message: "Sembra ci sia stato un'errore",
             error: error?.message || RangeError
         })
     }
