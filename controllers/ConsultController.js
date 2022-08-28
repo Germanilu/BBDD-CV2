@@ -5,14 +5,13 @@ const consultController = {};
 //Create new consult
 consultController.create = async (req, res) => {
     try {
-        const { petId, date, userMessage } = req.body;
+        const { petId, userMessage } = req.body;
         const userId = req.user_id
         await Pet.find({_id:petId})
         
         const newConsult = {
             userId,
             petId,
-            date,
             userMessage
         }
 
