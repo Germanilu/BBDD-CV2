@@ -16,14 +16,13 @@ const PetSchema = new mongoose.Schema({
     },
     breed: {
         type: String,
-        required: true,
     },
     age:{
         type: Date,
         required: true
     },
     weight: {
-        type: Number,
+        type: String,
         required: true
     },
     diseases: {

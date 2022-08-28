@@ -8,10 +8,10 @@ petController.register = async (req, res) => {
         //Connect the userId to the pet
         const userId = req.user_id;
         //Validation
-        if (!name || !type || !breed || !age || !weight) {
+        if (!name || !type || !age || !weight) {
             return res.status(400).json({
                 success: false,
-                message: "Compila tutti i campi richiesti "
+                message: "Nome, Specie, Età, Peso sono campi obbligatori"
             })
         }
 
