@@ -6,6 +6,11 @@ const consultSchema = new mongoose.Schema({
         ref:'User',
         required:true
     },
+    petId:{
+        type: mongoose.Schema.Types.ObjectId,
+        ref:'Pet',
+        required:true
+    },
     vetId:{
         type:mongoose.Schema.Types.ObjectId,
         ref:'Vet'
