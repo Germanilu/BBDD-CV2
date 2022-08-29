@@ -23,7 +23,7 @@ bookingController.create = async (req, res) => {
                 return res.status(404).json(
                     {
                         success: true,
-                        messagge: "Unable to book an appointment"
+                        messagge: "Giorno o Orario non disponibile, scegliere un'altra opzione"
                     }
                 );
             }
