@@ -12,7 +12,7 @@ router.delete('/pet:id', verifyToken, petController.deleteById)
 router.put('/pet:id', verifyToken,petController.update)
 router.get('/myPets',verifyToken,petController.getMyPets)
 router.get('/pets',verifyToken,isSuperAdmin,petController.getAll)
-router.get('/pets:id', verifyVetToken, isVet, petController.getPetById)
+router.get('/pets:id', verifyToken, petController.getPetById)
 router.get('/pet/:userId',verifyVetToken, isVet,petController.getByUserId)
 
 module.exports = router;
