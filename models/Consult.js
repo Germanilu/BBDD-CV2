@@ -1,4 +1,6 @@
 const mongoose = require('mongoose');
+const moment = require('moment')
+moment.locale("it")
 
 const consultSchema = new mongoose.Schema({
     userId:{
@@ -16,9 +18,9 @@ const consultSchema = new mongoose.Schema({
         ref:'Vet'
     },
     date:{
-        type:Date,
+        type:String,
         required:true,
-        default: new Date()
+        default: () => moment().format("dddd, DD MMMM YYYY")
     },
     userMessage:{
         type:String,

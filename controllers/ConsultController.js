@@ -52,6 +52,8 @@ consultController.getByUserId = async (req, res) => {
         const allConsult = await Consult.find({ userId })
         console.log(allConsult)
 
+        
+
         if (!allConsult) {
             return res.status(200).json(
                 {
