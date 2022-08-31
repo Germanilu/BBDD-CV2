@@ -124,8 +124,10 @@ consultController.reply = async (req, res) => {
     try {
         //Get data of consult id, vet id and body
         const { id } = req.params;
-        const vetId = req.vet_id;
+        const vetId = req.user_id;
         const { vetMessage } = req.body
+
+        console.log(vetId)
 
         //Get the consult 
         const consult = await Consult.findById(id)
@@ -155,8 +157,10 @@ consultController.reply = async (req, res) => {
 //Get the consult reply by vet Id
 consultController.getAllByVetId = async (req, res) => {
     try {
-        const vetId = req.vet_id;
+        const vetId = req.user_id;
         const consult = await Consult.find({ vetId: vetId })
+        
+        
         return res.status(200).json(
             {
                 success: true,
@@ -164,6 +168,8 @@ consultController.getAllByVetId = async (req, res) => {
                 data: consult
             }
         )
+
+        
 
     } catch (error) {
         return res.status(500).json(
