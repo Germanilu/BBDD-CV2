@@ -127,6 +127,15 @@ consultController.reply = async (req, res) => {
         const vetId = req.user_id;
         const { vetMessage } = req.body
 
+        if(vetMessage == ""){
+            return res.status(400).json(
+                {
+                    success: false,
+                    message: "Devi Scrivere la risposta",
+                }
+            )
+        }
+
         console.log(vetId)
 
         //Get the consult 
@@ -137,14 +146,7 @@ consultController.reply = async (req, res) => {
         //Save the consult
         await consult.save()
 
-        if(vetMessage == ""){
-            return res.status(400).json(
-                {
-                    success: false,
-                    message: "Devi Scrivere la risposta",
-                }
-            )
-        }
+        
 
         return res.status(200).json(
             {
