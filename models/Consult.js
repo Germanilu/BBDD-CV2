@@ -8,6 +8,14 @@ const consultSchema = new mongoose.Schema({
         ref:'User',
         required:true
     },
+    userName:{
+        type: String,
+        required:true
+    },
+    userSurname:{
+        type: String,
+        required:true
+    },
     petId:{
         type: mongoose.Schema.Types.ObjectId,
         ref:'Pet',

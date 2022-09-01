@@ -211,7 +211,7 @@ consultController.getAllConsultUnreply = async (req, res) => {
     try {
         const vetId = null;
         const consult = await Consult.find({ vetId: vetId })
-
+        
         return res.status(200).json(
             {
                 success: true,
