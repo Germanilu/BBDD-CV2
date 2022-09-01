@@ -137,10 +137,19 @@ consultController.reply = async (req, res) => {
         //Save the consult
         await consult.save()
 
+        if(vetMessage == ""){
+            return res.status(400).json(
+                {
+                    success: false,
+                    message: "Devi Scrivere la risposta",
+                }
+            )
+        }
+
         return res.status(200).json(
             {
                 success: true,
-                message: "Reply Send succesfully",
+                message: "Risposta inviata correttamente",
             }
         )
     } catch (error) {
