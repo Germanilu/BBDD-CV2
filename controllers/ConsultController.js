@@ -209,9 +209,8 @@ consultController.getAllByVetId = async (req, res) => {
 //Get all consult where there isn't vet ID ( Unreply Consults)
 consultController.getAllConsultUnreply = async (req, res) => {
     try {
-        const vetId = null;
-        const consult = await Consult.find({ vetId: vetId })
         
+        const consult = await Consult.find({ vetId: null })
         return res.status(200).json(
             {
                 success: true,

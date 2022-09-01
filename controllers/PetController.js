@@ -69,19 +69,15 @@ petController.update = async (req, res) => {
         const { id } = req.params;
 
         //Check if missing data
-        if (req.body.name === "" || req.body.type === "" || req.body.breed === "" || req.body.age === "" || req.body.weight === "") {
+        if ( req.body.diseases === "" || req.body.weight === "") {
             return res.status(400).json({
                 success: false,
-                message: "Unable to update pet, missing data"
+                message: "Devi prima inserire un nuovo valore"
             })
         }
 
-        const { name, type, breed, age, weight, diseases } = req.body;
+        const {  weight, diseases } = req.body;
         const updatePet = {
-            name,
-            type,
-            breed,
-            age,
             weight,
             diseases
         }
@@ -90,7 +86,7 @@ petController.update = async (req, res) => {
         return res.status(200).json(
             {
                 success: true,
-                message: "Pet Update Succesfully",
+                message: "Pet Update Succesfully"
             }
         )
     } catch (error) {
