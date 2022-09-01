@@ -1,16 +1,26 @@
 const Consult = require('../models/Consult');
 const Pet = require('../models/Pet');
+const User = require('../models/User');
+const Vet = require('../models/Vet');
 const consultController = {};
 
 //Create new consult
 consultController.create = async (req, res) => {
     try {
         const { petId, userMessage } = req.body;
+
         const userId = req.user_id
+        const userName = req.user_name
+        const userSurname = req.user_surname
+        const userEmail = req.user_email
+
         await Pet.find({_id:petId})
         
         const newConsult = {
             userId,
+            userName,
+            userSurname,
+            userEmail,
             petId,
             userMessage
         }
@@ -125,7 +135,9 @@ consultController.reply = async (req, res) => {
         //Get data of consult id, vet id and body
         const { id } = req.params;
         const vetId = req.user_id;
+        const vetName = req.user_name
         const { vetMessage } = req.body
+       
 
         if(vetMessage == ""){
             return res.status(400).json(
@@ -142,6 +154,7 @@ consultController.reply = async (req, res) => {
         const consult = await Consult.findById(id)
         //Set the consult data
         consult.vetId = vetId
+        consult.vetName = vetName
         consult.vetMessage = vetMessage
         //Save the consult
         await consult.save()

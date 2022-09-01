@@ -26,6 +26,9 @@ const consultSchema = new mongoose.Schema({
         type:String,
         required:true
     },
+    vetName:{
+        type:String
+    },
     vetMessage:{
         type:String
     }
