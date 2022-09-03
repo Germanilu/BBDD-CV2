@@ -7,10 +7,14 @@ bookingController.create = async (req, res) => {
     try {
         //Get the data from token & body
         const userId = req.user_id;
+        const userName = req.user_name
+        const userSurname = req.user_surname
         const { date, hour } = req.body;
 
         const newBook = {
             userId,
+            userName,
+            userSurname,
             date,
             hour
         }

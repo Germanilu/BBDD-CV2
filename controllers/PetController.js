@@ -131,7 +131,7 @@ petController.getAll = async (req, res) => {
         return res.status(200).json(
             {
                 success: true,
-                message: "Pet Update Succesfully",
+                message: "Pet retrive succesfully",
                 data: pets
             }
         )
