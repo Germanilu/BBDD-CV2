@@ -6,6 +6,7 @@ require('dotenv').config();
 const db = require('./config/database');  
 
 
+
 //Connect to Auth Routes
 const authRoutes = require('./routes/auth.routes');
 const userRoutes = require('./routes/user.routes');
@@ -62,4 +63,3 @@ db().then(() => {
     .catch((error) => {
         console.log("error connecting to mongoDB ", error)
     })
-    

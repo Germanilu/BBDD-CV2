@@ -7,7 +7,7 @@ petController.register = async (req, res) => {
         const { name, type, breed, age, weight, diseases } = req.body;
         //Connect the userId to the pet
         const userId = req.user_id;
-        //Validation
+        // Validation
         if (!name || !type || !age || !weight) {
             return res.status(400).json({
                 success: false,

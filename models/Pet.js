@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+
 const PetSchema = new mongoose.Schema({
 
     userId:{
@@ -18,8 +19,8 @@ const PetSchema = new mongoose.Schema({
         type: String,
     },
     age:{
-        type: Date,
-        required: true
+        type: String,
+        required: true,
     },
     weight: {
         type: String,
