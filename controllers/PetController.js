@@ -68,7 +68,7 @@ petController.register = async (req, res) => {
             return res.status(404).json(
                 {
                     success: true,
-                    messagge: "Attenzione, Devi scegliere tra le seguenti Specie: Cane, Gatto, Coniglio, Roditore, Uccello"
+                    messagge: "Specie disponibili: Cane, Gatto, Coniglio, Roditore, Uccello"
 
                 }
             );
