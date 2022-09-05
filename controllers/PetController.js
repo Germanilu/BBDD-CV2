@@ -37,6 +37,7 @@ petController.register = async (req, res) => {
                 message: "Nome, Specie, Età, Peso sono campi obbligatori"
             })
         }
+
         console.log("aqui",avatar)
 
      
@@ -62,6 +63,17 @@ petController.register = async (req, res) => {
         })
 
     } catch (error) {
+
+        if (error?.message.includes('Cast to string failed')) {
+            return res.status(404).json(
+                {
+                    success: true,
+                    messagge: "Attenzione, Devi scegliere tra le seguenti Specie: Cane, Gatto, Coniglio, Roditore, Uccello"
+
+                }
+            );
+        }
+
         return res.status(500).json({
             success: false,
             message: "Sembra ci sia stato un'errore",
