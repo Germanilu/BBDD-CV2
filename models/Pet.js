@@ -13,6 +13,7 @@ const PetSchema = new mongoose.Schema({
     },
     type: {
         type: String,
+        enum:['Gatto', 'Cane', 'Coniglio', 'Roditore', 'Uccello'],
         required: true,
     },
     breed: {
@@ -27,6 +28,9 @@ const PetSchema = new mongoose.Schema({
         required: true
     },
     diseases: {
+        type: String
+    },
+    avatar: {
         type: String
     }
 })

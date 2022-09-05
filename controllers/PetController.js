@@ -5,8 +5,31 @@ const petController = {};
 petController.register = async (req, res) => {
     try {
         const { name, type, breed, age, weight, diseases } = req.body;
+        let avatar = req.body
         //Connect the userId to the pet
         const userId = req.user_id;
+        console.log(type)
+
+        //Add avatar based on type
+        switch(type){
+            case "Gatto":
+            avatar = "https://i.postimg.cc/QCxMKGcC/Cat.png"
+            break;
+            case "Cane":
+            avatar = "https://i.postimg.cc/JhZ09Q1r/Dog.png"
+            break;
+            case "Coniglio":
+            avatar = "https://i.postimg.cc/qRrq0CR8/Rabbit.png"
+            break;
+            case "Roditore":
+            avatar = "https://i.postimg.cc/B6C6vQLR/rat.png"
+            break;
+            case "Uccello":
+            avatar = "https://i.postimg.cc/2SqVxDMB/bird.png"
+            break;
+
+        }
+
         // Validation
         if (!name || !type || !age || !weight) {
             return res.status(400).json({
@@ -14,6 +37,9 @@ petController.register = async (req, res) => {
                 message: "Nome, Specie, Età, Peso sono campi obbligatori"
             })
         }
+        console.log("aqui",avatar)
+
+     
 
         const newPet = {
             userId,
@@ -22,14 +48,17 @@ petController.register = async (req, res) => {
             breed,
             age,
             weight,
-            diseases
+            diseases,
+            avatar
         }
+        console.log(newPet)
 
         await Pet.create(newPet);
 
         return res.status(200).json({
             success: true,
-            message: 'Pet created successfully'
+            message: 'Pet created successfully',
+            data:newPet
         })
 
     } catch (error) {
