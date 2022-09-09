@@ -21,9 +21,9 @@
 
 *Si lo prefieres puedes leer esto en* [English](README.md)
 
-Este proyecto es la base de datos de una clinica veterinaria echo con Express y MongoDB
+Este proyecto es la base de datos de una clínica veterinaria hecho con Express y MongoDB
 
-Si te gustaria ver la aplicacion completa, te aconsejo ver este repositorio de github donde encontraras todas las informaciones y el link para ver la aplicacion --> https://github.com/Germanilu/ClinicaVeterinariaDueMari
+Si te gustaría ver la aplicación completa, te aconsejo ver este repositorio de github donde encontraras todas las informaciones y el link para ver la aplicación --> https://github.com/Germanilu/ClinicaVeterinariaDueMari
 
 
 
@@ -37,7 +37,7 @@ Para poder usarla necesitarás instalar Postman ((https://www.postman.com/) y ap
 
 # Busquedas
 
-Aquí puede encontrar todos los métodos que puede usar en Postman para poder hacer sus busquedas.
+Aquí puede encontrar todos los métodos que puede usar en Postman para poder hacer sus búsquedas.
 
 ## Identificación de Usuario
 
