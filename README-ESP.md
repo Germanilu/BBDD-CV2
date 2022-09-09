@@ -33,6 +33,8 @@ Si te gustaría ver la aplicación completa, te aconsejo ver este repositorio de
 
 Para poder usarla necesitarás instalar Postman ((https://www.postman.com/) y apuntar a este servidor de heroku: https://bbdd-cv2.herokuapp.com
 
+![Postman](./imgReadme/postmanGif.gif)
+
 
 
 # Busquedas
